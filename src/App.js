@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { getPokemon, getAllPokemon } from './Services/pokeServices.js';
 import PokemonList from './Pages/pokemonList.js';
 import './App.css';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -30,9 +34,14 @@ function App() {
   };
 
   return (
-    <>
-  <Router>
+    <ThemeProvider theme={theme}>
+      <Router>
         <div className='gridContainer' style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
+        <Typography variant="h2" sx={{ textAlign: 'center', margin: '20px 0' }}>
+            PokeInfo
+          </Typography>
+          
+
           {loading ? (
             <h1>Loading...</h1>
           ) : (
@@ -41,16 +50,20 @@ function App() {
                 exact
                 path='/'
                 element={
-                  pokemonData.map((pokemon, i) => (
-                    <PokemonList key={i} pokemon={pokemon} />
-                  ))
+                  <Grid container spacing={2}>
+                  {pokemonData.map((pokemon, i) => (
+                    <Grid item xs={6} sm={6} md={3} lg={2} key={i}>
+                      <PokemonList pokemon={pokemon} />
+                    </Grid>
+                  ))}
+                </Grid>
                 }
               />
             </Routes>
           )}
         </div>
       </Router>
-    </>
+    </ThemeProvider>
   );
 }
 
