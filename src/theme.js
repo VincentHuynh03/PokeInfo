@@ -4,10 +4,12 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Rubik, sans-serif',
     h1: {
-      fontWeight: 600,
+      fontFamily: 'Luckiest Guy, sans-serif',
+      fontWeight: 400,
     },
     h2: {
-      fontWeight: 600,
+      fontFamily: 'Luckiest Guy, sans-serif',
+      fontWeight: 400,
     },
     h3: {
       fontWeight: 500,

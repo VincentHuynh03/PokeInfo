@@ -23,9 +23,12 @@ code {
 }
 body{
   text-transform: capitalize;
+  background-color: 	#eeeeee;
+
 }
-h2{
+h1{
   text-transform: capitalize;
+  letter-spacing: 15px;
 }
 h4{
   text-transform: capitalize;
@@ -33,4 +36,3 @@ h4{
 h5{
   text-transform: capitalize;
 }
-
