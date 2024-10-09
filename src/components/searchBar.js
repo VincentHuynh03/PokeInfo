@@ -34,10 +34,9 @@ export const SearchBar =  ({setSearchResults}) => {
         fetchData(value)
       }
     return (
-        <Paper
-        component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, margin: '0 auto', marginTop: '50px',}}
-      >
+      <Paper
+      component="form"
+      sx={{ p: '2px 4px', display: 'flex',  alignItems: 'center', width: { xs: '90%', sm: 400 }, margin: '0 auto', marginTop: '50px',}}>
         <IconButton sx={{ p: '10px' }} aria-label="menu">
           <ArrowDropDownIcon />
         </IconButton>

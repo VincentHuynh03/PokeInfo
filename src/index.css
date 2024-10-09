@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif; /* Use Hind as the main font */
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,10 +21,11 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 20px;
 }
+
 body{
   text-transform: capitalize;
-  background-color: 	#eeeeee;
-
+  margin: 0;
+  background: linear-gradient(to right, #f8f4e3, #eae1d3);
 }
 h1{
   text-transform: capitalize;

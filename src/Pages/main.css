@@ -4,3 +4,23 @@
     display:flex;
     margin-bottom: 70px;
   }
+
+  .pokeinfo-font-image {
+    display: block; 
+    margin: 0 auto; 
+    margin-top: 60px; 
+    pointer-events: none; 
+  }
+  
+  @media (max-width: 768px) {
+    .pokeinfo-font-image {
+      width: 80%; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pokeinfo-font-image {
+      width: 100%; 
+    }
+  }
+  

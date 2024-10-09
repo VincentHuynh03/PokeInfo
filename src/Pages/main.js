@@ -5,11 +5,11 @@ import './main.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme.js';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { SearchBar } from '../components/searchBar.js';
 import { SearchResultsList } from '../components/searchResultsList.js';
+import pokeinfoLogo from '../Assets/pokeinfo-logo.png';
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -48,13 +48,12 @@ function Main() {
   return (
     <ThemeProvider theme={theme}>
       <div className='gridContainer' style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-        <Typography 
-          variant="h1" 
-          sx={{ textAlign: 'center', margin: '20px 0', color: 'white', marginTop: '60px', 
-          textShadow: '#ec4b41 -2px -2px 0px, #ec4b41 2px -2px 0px, #ec4b41 -2px 2px 0px, #ec4b41 2px 2px 0px' }}
-        >
-          PokeInfo
-        </Typography>
+        <img 
+          className="pokeinfo-font-image"
+          src={pokeinfoLogo} 
+          alt="pokemon-font" 
+          border="0" 
+        />
 
         <div className="search-bar-container">
           <SearchBar setSearchResults={setSearchResults} />
