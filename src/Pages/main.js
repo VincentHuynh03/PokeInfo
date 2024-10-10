@@ -10,22 +10,34 @@ import Divider from '@mui/material/Divider';
 import { SearchBar } from '../components/searchBar.js';
 import { SearchResultsList } from '../components/searchResultsList.js';
 import pokeinfoLogo from '../Assets/pokeinfo-logo.png';
+import InfiniteScroll from "react-infinite-scroller";
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
-  const apiURL = 'https://pokeapi.co/api/v2/pokemon?limit=151';
-  const generations = 8;
-  
+  const [pokemonPerLoad] = useState(50); 
+  const [hasMore, setHasMore] = useState(true);
+  const [nextOffset, setNextOffset] = useState(0); 
+  const apiURL = 'https://pokeapi.co/api/v2/pokemon';
+
   useEffect(() => {
-    async function fetchData() {
-      let response = await getAllPokemon(apiURL);
-      await loadPokemon(response.results);
-      setLoading(false);
-    }
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    let response = await getAllPokemon(`${apiURL}?limit=${pokemonPerLoad}&offset=${nextOffset}`);
+    
+    if (response.results.length === 0) {
+      setHasMore(false); 
+      return;
+    }
+
+    let pokemonList = await loadPokemon(response.results);
+    setPokemonData([...pokemonData, ...pokemonList]);
+    setNextOffset(nextOffset + pokemonPerLoad); 
+  };
 
   const loadPokemon = async (data) => {
     let _pokemonData = await Promise.all(
@@ -34,7 +46,11 @@ function Main() {
         return pokemonGet;
       })
     );
-    setPokemonData(_pokemonData);
+    return _pokemonData;
+  };
+
+  const loadMore = () => {
+    fetchData();
   };
 
   const toRoman = (num) => {
@@ -61,7 +77,7 @@ function Main() {
         </div>
 
         <Grid container spacing={3} justifyContent="center" marginBottom='50px'>
-          {Array.from({ length: generations }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <Grid item xs={6} sm={6} md={3} lg={2.3} key={i}>
               <Button variant="outlined" size="medium" style={{ margin: '0 auto' }}>
                 Generation {toRoman(i + 1)}
@@ -72,16 +88,24 @@ function Main() {
 
         <Divider sx={{ marginBottom : '50px', borderColor : '#6c757d' }} />
 
-        {loading ? (
+        {loading && pokemonData.length === 0 ? (
           <h1>Loading...</h1>
         ) : (
-          <Grid container spacing={2}>
-            {pokemonData.map((pokemon, i) => (
-              <Grid item xs={6} sm={6} md={3} lg={2} key={i}>
-                <PokemonList pokemon={pokemon} />
-              </Grid>
-            ))}
-          </Grid>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={hasMore}
+            loader={<h4 className="loader">Loading...</h4>}
+            useWindow={true}
+          >
+            <Grid container spacing={2}>
+              {pokemonData.map((pokemon, i) => (
+                <Grid item xs={6} sm={6} md={3} lg={2} key={i}>
+                  <PokemonList pokemon={pokemon} />
+                </Grid>
+              ))}
+            </Grid>
+          </InfiniteScroll>
         )}
       </div>
     </ThemeProvider>
