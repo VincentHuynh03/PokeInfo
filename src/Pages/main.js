@@ -95,7 +95,6 @@ function Main() {
             pageStart={0}
             loadMore={loadMore}
             hasMore={hasMore}
-            loader={<h4 className="loader">Loading...</h4>}
             useWindow={true}
           >
             <Grid container spacing={2}>
