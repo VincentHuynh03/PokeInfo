@@ -16,9 +16,11 @@ function Main() {
   const [pokemonData, setPokemonData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
-  const [pokemonPerLoad] = useState(50); 
+  const [pokemonPerLoad, setPokemonPerLoad] = useState(50); 
   const [hasMore, setHasMore] = useState(true);
   const [nextOffset, setNextOffset] = useState(0); 
+  const [displayPokemon, setDisplayPokemon] = useState([]);
+  const [isGenerationLoading, setIsGenerationLoading] = useState(false);
   const apiURL = 'https://pokeapi.co/api/v2/pokemon';
 
   useEffect(() => {
@@ -35,8 +37,9 @@ function Main() {
     }
 
     let pokemonList = await loadPokemon(response.results);
-    setPokemonData([...pokemonData, ...pokemonList]);
-    setNextOffset(nextOffset + pokemonPerLoad); 
+    setPokemonData((prevData) => [...prevData, ...pokemonList]);
+    setNextOffset((prevOffset) => prevOffset + pokemonPerLoad); 
+    setLoading(false);
   };
 
   const loadPokemon = async (data) => {
@@ -61,6 +64,47 @@ function Main() {
     return romanNumerals[num] || num;
   };
 
+  const handleGenerationClick = async (i) => {
+    setIsGenerationLoading(true);
+    const generationRanges = {
+      1: [0, 151],
+      2: [151, 251],
+      3: [251, 386],
+      4: [386, 493],
+      5: [493, 649],
+      6: [649, 721],
+      7: [721, 809],
+      8: [809, 905],
+    };
+  
+    const [start, end] = generationRanges[i];
+  
+    if (pokemonData.length < end) {
+      let missingPokemons = await getAllPokemon(`${apiURL}?limit=${end - pokemonData.length}&offset=${pokemonData.length}`);
+      let newPokemonList = await loadPokemon(missingPokemons.results);
+      
+      setPokemonData((prevData) => {
+        const updatedData = [...prevData, ...newPokemonList];
+          if (i === 1) {
+          setDisplayPokemon(updatedData.slice(0, 151));
+        } else {
+          setDisplayPokemon(updatedData.slice(start, end));
+        }
+  
+        return updatedData;
+      });
+    } else {
+      if (i === 1) {
+        setDisplayPokemon(pokemonData.slice(0, 151));
+      } else {
+        setDisplayPokemon(pokemonData.slice(start, end));
+      }
+    }
+  
+    setIsGenerationLoading(false); 
+  };
+  
+
   return (
     <ThemeProvider theme={theme}>
       <div className='gridContainer' style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
@@ -79,7 +123,7 @@ function Main() {
         <Grid container spacing={3} justifyContent="center" marginBottom='50px'>
           {Array.from({ length: 8 }).map((_, i) => (
             <Grid item xs={6} sm={6} md={3} lg={2.3} key={i}>
-              <Button variant="outlined" size="medium" style={{ margin: '0 auto' }}>
+              <Button variant="outlined" size="medium" onClick={() => handleGenerationClick(i + 1)} style={{ margin: '0 auto' }}>
                 Generation {toRoman(i + 1)}
               </Button>
             </Grid>
@@ -90,6 +134,8 @@ function Main() {
 
         {loading && pokemonData.length === 0 ? (
           <h1>Loading...</h1>
+        ) : isGenerationLoading ? (
+          <h1>Loading Generation...</h1>
         ) : (
           <InfiniteScroll
             pageStart={0}
@@ -98,7 +144,7 @@ function Main() {
             useWindow={true}
           >
             <Grid container spacing={2}>
-              {pokemonData.map((pokemon, i) => (
+              {(displayPokemon.length > 0 ? displayPokemon : pokemonData).map((pokemon, i) => (
                 <Grid item xs={6} sm={6} md={3} lg={2} key={i}>
                   <PokemonList pokemon={pokemon} />
                 </Grid>
