@@ -21,6 +21,7 @@ function Main() {
   const [nextOffset, setNextOffset] = useState(0); 
   const [displayPokemon, setDisplayPokemon] = useState([]);
   const [isGenerationLoading, setIsGenerationLoading] = useState(false);
+  const [selectedGeneration, setSelectedGeneration] = useState(null); 
   const apiURL = 'https://pokeapi.co/api/v2/pokemon';
 
   useEffect(() => {
@@ -82,6 +83,7 @@ function Main() {
   };
 
   const handleGenerationClick = async (i) => {
+    setSelectedGeneration(i);
     setIsGenerationLoading(true);
     const generationRanges = {
       1: [0, 151],
@@ -140,7 +142,7 @@ function Main() {
         <Grid container spacing={3} justifyContent="center" marginBottom='50px'>
           {Array.from({ length: 8 }).map((_, i) => (
             <Grid item xs={6} sm={6} md={3} lg={2.3} key={i}>
-              <Button variant="outlined" size="medium" onClick={() => handleGenerationClick(i + 1)} style={{ margin: '0 auto', width: '170px', }}>
+              <Button variant="outlined" size="medium" onClick={() => handleGenerationClick(i + 1)} style={{ margin: '0 auto', width: '170px', color:'black' , backgroundColor: selectedGeneration === i + 1 ? '#E2E6F8' : 'transparent', borderRadius:'25px'}}>
                 Generation {toRoman(i + 1)}
               </Button>
             </Grid>
