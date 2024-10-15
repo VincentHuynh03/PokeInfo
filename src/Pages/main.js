@@ -14,7 +14,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); 
   const [searchResults, setSearchResults] = useState([]);
   const [pokemonPerLoad, setPokemonPerLoad] = useState(50); 
   const [hasMore, setHasMore] = useState(true);
@@ -24,22 +24,37 @@ function Main() {
   const apiURL = 'https://pokeapi.co/api/v2/pokemon';
 
   useEffect(() => {
-    fetchData();
+    fetchData(); 
   }, []);
 
   const fetchData = async () => {
+    if (loading || !hasMore) return; 
     setLoading(true);
-    let response = await getAllPokemon(`${apiURL}?limit=${pokemonPerLoad}&offset=${nextOffset}`);
-    
-    if (response.results.length === 0) {
-      setHasMore(false); 
-      return;
-    }
 
-    let pokemonList = await loadPokemon(response.results);
-    setPokemonData((prevData) => [...prevData, ...pokemonList]);
-    setNextOffset((prevOffset) => prevOffset + pokemonPerLoad); 
-    setLoading(false);
+    try {
+      const response = await getAllPokemon(`${apiURL}?limit=${pokemonPerLoad}&offset=${nextOffset}`);
+      
+      if (!response.results || response.results.length === 0) {
+        setHasMore(false);
+        setLoading(false);
+        return;
+      }
+
+      const pokemonList = await loadPokemon(response.results);
+
+      setPokemonData((prevData) => {
+        const newData = [...prevData, ...pokemonList];
+        const uniqueData = Array.from(new Set(newData.map(p => p.name)))
+          .map(name => newData.find(p => p.name === name));
+        return uniqueData;
+      });
+
+      setNextOffset(nextOffset + pokemonPerLoad);
+    } catch (error) {
+      console.error('Error fetching Pokémon:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loadPokemon = async (data) => {
@@ -53,8 +68,10 @@ function Main() {
   };
 
   const loadMore = () => {
-    fetchData();
-  };
+    if (!loading && hasMore) {
+      fetchData(); 
+    }
+  };;
 
   const toRoman = (num) => {
     const romanNumerals = {
@@ -123,7 +140,7 @@ function Main() {
         <Grid container spacing={3} justifyContent="center" marginBottom='50px'>
           {Array.from({ length: 8 }).map((_, i) => (
             <Grid item xs={6} sm={6} md={3} lg={2.3} key={i}>
-              <Button variant="outlined" size="medium" onClick={() => handleGenerationClick(i + 1)} style={{ margin: '0 auto' }}>
+              <Button variant="outlined" size="medium" onClick={() => handleGenerationClick(i + 1)} style={{ margin: '0 auto', width: '170px', }}>
                 Generation {toRoman(i + 1)}
               </Button>
             </Grid>
