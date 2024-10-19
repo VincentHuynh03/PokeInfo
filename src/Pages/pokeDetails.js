@@ -18,7 +18,13 @@ function PokeDetails() {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
         if (!response.ok) throw new Error('Pokemon not found');
         const data = await response.json();
-        setPokemon(data);
+
+        const speciesResponse = await fetch(data.species.url);
+        if (!speciesResponse.ok) throw new Error('Species information not found');
+        const speciesData = await speciesResponse.json();
+
+
+        setPokemon({ ...data, speciesData });
         setLoading(false);
       } catch (error) {
         setError(error.message);

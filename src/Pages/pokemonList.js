@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-function PokemonList({ pokemon }) {
+function PokemonList({ pokemon, onClick }) {
   return (
     <Box
       sx={{
@@ -19,8 +19,8 @@ function PokemonList({ pokemon }) {
         },
       }}
     >
-      <Paper elevation={6}>
-        <Grid container direction="column" spacing={1} alignItems="center">
+      <Paper elevation={6} onClick={onClick} style={{ cursor: 'pointer' }}>
+      <Grid container direction="column" spacing={1} alignItems="center">
           <Grid item xs={12} sm={4} sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
               src={pokemon.sprites.other['official-artwork'].front_default}

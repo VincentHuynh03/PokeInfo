@@ -11,6 +11,7 @@ import { SearchBar } from '../components/searchBar.js';
 import { SearchResultsList } from '../components/searchResultsList.js';
 import pokeinfoLogo from '../Assets/pokeinfo-logo.png';
 import InfiniteScroll from "react-infinite-scroller";
+import { useNavigate } from 'react-router-dom';
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -23,6 +24,7 @@ function Main() {
   const [isGenerationLoading, setIsGenerationLoading] = useState(false);
   const [selectedGeneration, setSelectedGeneration] = useState(null); 
   const apiURL = 'https://pokeapi.co/api/v2/pokemon';
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData(); 
@@ -122,7 +124,11 @@ function Main() {
   
     setIsGenerationLoading(false); 
   };
-  
+
+
+  const handlePokemonClick = (pokemonName) => {
+    navigate(`/pokemon/${pokemonName}`);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -165,7 +171,7 @@ function Main() {
             <Grid container spacing={2}>
               {(displayPokemon.length > 0 ? displayPokemon : pokemonData).map((pokemon, i) => (
                 <Grid item xs={6} sm={6} md={3} lg={2} key={i}>
-                  <PokemonList pokemon={pokemon} />
+                  <PokemonList pokemon={pokemon} onClick={() => handlePokemonClick(pokemon.name)} />
                 </Grid>
               ))}
             </Grid>
