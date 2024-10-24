@@ -345,6 +345,7 @@ function PokeDetails() {
               mx: "auto",
               overflow: "hidden",
               height: "100%",
+              marginBottom: { xs: "50px" },
             }}
           >
             <CardHeader
