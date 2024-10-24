@@ -1,0 +1,21 @@
+body {
+  font-family: "Lato", sans-serif;
+}
+.logoDetails {
+  position: absolute;
+  top: -80px;
+  left: 5px;
+  right: 30px;
+  padding: 60px;
+}
+
+@media (min-width: 1200px) {
+  .logoDetails {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+    padding: 60px;
+    margin: 20px;
+    margin-bottom: 50px;
+  }
+}

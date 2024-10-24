@@ -1,11 +1,6 @@
-import React from 'react';
-import "./searchResults.css"
+import React from "react";
+import "./searchResults.css";
 
-export const SearchResults =  ({result}) => {
-    return (
-        <div className="search-result">
-            {result.name}
-        </div>
-
-    );
+export const SearchResults = ({ result }) => {
+  return <div className="search-result">{result.name}</div>;
 };

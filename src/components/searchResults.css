@@ -1,7 +1,6 @@
-.search-result{
-    padding: 10px 20px;
-
+.search-result {
+  padding: 10px 20px;
 }
-.search-result:hover{
-    background-color: #E9E9E9;    
+.search-result:hover {
+  background-color: #e9e9e9;
 }

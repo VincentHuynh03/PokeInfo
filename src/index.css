@@ -1,13 +1,12 @@
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 * {
@@ -16,24 +15,24 @@ code {
 
 .gridContainer {
   width: 90%;
-  flex-direction:column;
+  flex-direction: column;
   margin: 20px auto;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 20px;
 }
 
-body{
+body {
   text-transform: capitalize;
   margin: 0;
   background: linear-gradient(to right, #f8f4e3, #eae1d3);
 }
-h1{
+h1 {
   text-transform: capitalize;
   letter-spacing: 15px;
 }
-h4{
+h4 {
   text-transform: capitalize;
 }
-h5{
+h5 {
   text-transform: capitalize;
 }

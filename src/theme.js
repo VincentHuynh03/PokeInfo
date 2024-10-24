@@ -1,14 +1,14 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Rubik, sans-serif',
+    fontFamily: "Rubik, sans-serif",
     h1: {
-      fontFamily: 'Poppins, sans-serif',
+      fontFamily: "Poppins, sans-serif",
       fontWeight: 400,
     },
     h2: {
-      fontFamily: 'Luckiest Guy, sans-serif',
+      fontFamily: "Luckiest Guy, sans-serif",
       fontWeight: 400,
     },
     h3: {
