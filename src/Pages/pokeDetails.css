@@ -19,3 +19,10 @@ body {
     margin-bottom: 50px;
   }
 }
+.search-bar-details-container {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  margin:auto;
+  margin-top: -10px;
+}

@@ -17,3 +17,11 @@
     width: 400px;
   }
 }
+.result-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.result-link:visited {
+  color: inherit;
+}

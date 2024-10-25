@@ -7,6 +7,9 @@ import Pokeball from "../Assets/pokeball.png";
 import Chip from "@mui/material/Chip";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import pokeinfoLogo from "../Assets/pokeinfo-logo.png";
+import { SearchBar } from "../components/searchBar.js";
+import { SearchResultsList } from "../components/searchResultsList.js";
+import { Link } from "react-router-dom";
 import "./pokeDetails.css";
 
 function PokeDetails() {
@@ -16,6 +19,7 @@ function PokeDetails() {
   const [error, setError] = useState(null);
   const [strengths, setStrengths] = useState([]);
   const [weaknesses, setWeaknesses] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -122,15 +126,25 @@ function PokeDetails() {
           width: "100%",
           backgroundColor: "#E6F8E2",
           mb: 2,
+          userSelect: "none", 
           position: "relative",
+          boxShadow:
+            "0px 4px 8px rgba(0, 0, 0, 0.1), 0px 6px 12px rgba(0, 0, 0, 0.05)",
         }}
       >
-        <img
-          className="pokeinfo-font-image logoDetails"
-          src={pokeinfoLogo}
-          alt="pokemon-font"
-          border="0"
-        />
+        <Link to="/">
+          <img
+            className="pokeinfo-font-image logoDetails"
+            src={pokeinfoLogo}
+            alt="pokemon-font"
+            border="0"
+            style={{ pointerEvents: "auto" }}
+          />
+        </Link>
+        <div className="search-bar-details-container">
+          <SearchBar setSearchResults={setSearchResults} />
+          <SearchResultsList searchResults={searchResults} />
+        </div>
       </Box>
 
       <Grid
