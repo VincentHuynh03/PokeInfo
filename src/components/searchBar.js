@@ -1,10 +1,11 @@
 import "./searchBar.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Paper } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import debounce from "lodash.debounce";
 
 export const SearchBar = ({ setSearchResults }) => {
   const apiURL = "https://pokeapi.co/api/v2/pokemon";
@@ -37,23 +38,28 @@ export const SearchBar = ({ setSearchResults }) => {
     };
 
     fetchAllPokemon();
-  }, []);
+  }, [apiURL]);
 
-  const fetchData = (value) => {
-    const results = allPokemon.filter((pokemon) => {
-      return (
-        value &&
-        pokemon &&
-        pokemon.name &&
-        pokemon.name.toLowerCase().includes(value.toLowerCase())
-      );
-    });
-    setSearchResults(results);
-  };
+  const fetchData = useCallback(
+    (value) => {
+      const results = allPokemon.filter((pokemon) => {
+        return (
+          value &&
+          pokemon &&
+          pokemon.name &&
+          pokemon.name.toLowerCase().includes(value.toLowerCase())
+        );
+      });
+      setSearchResults(results);
+    },
+    [allPokemon, setSearchResults]
+  );
+
+  const debouncedFetchData = useCallback(debounce(fetchData, 100), [fetchData]);
 
   const handleChange = (value) => {
     setSearchInput(value);
-    fetchData(value);
+    debouncedFetchData(value);
   };
 
   return (

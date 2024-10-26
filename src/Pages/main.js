@@ -12,6 +12,7 @@ import { SearchResultsList } from "../components/searchResultsList.js";
 import pokeinfoLogo from "../Assets/pokeinfo-logo.png";
 import InfiniteScroll from "react-infinite-scroller";
 import { useNavigate } from "react-router-dom";
+import poke3d from "../Assets/pokesmall.png";
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -142,24 +143,67 @@ function Main() {
     navigate(`/pokemon/${pokemonName}`);
   };
 
+  useEffect(() => {
+    const canvas = document.getElementById("pokeball-canvas");
+    const ctx = canvas.getContext("2d");
+    const image = new Image();
+    image.src = poke3d;
+
+    image.onload = () => {
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const time = Date.now() * 0.0003;
+        const fixedSize = 30;
+
+        for (let i = 0; i < 13; i++) {
+          const x =
+            (Math.sin(time + i * 0.5) * canvas.width) / 6 + canvas.width / 2;
+          const y =
+            (Math.cos(time + i * 0.5) * canvas.height) / 6 + canvas.height / 2;
+
+          ctx.drawImage(
+            image,
+            x - fixedSize / 2,
+            y - fixedSize / 2,
+            fixedSize,
+            fixedSize
+          );
+        }
+
+        requestAnimationFrame(animate);
+      };
+
+      animate();
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <div
         className="gridContainer"
         style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1rem" }}
       >
+        <canvas
+          id="pokeball-canvas"
+          width="500"
+          height="500"
+          style={{
+            position: "absolute",
+            top: "-140px",
+            left: "700px",
+            zIndex: "-1",
+          }}
+        ></canvas>
         <img
           className="pokeinfo-font-image"
           src={pokeinfoLogo}
           alt="pokemon-font"
           border="0"
         />
-
         <div className="search-bar-container">
           <SearchBar setSearchResults={setSearchResults} />
           <SearchResultsList searchResults={searchResults} />
         </div>
-
         <Grid container spacing={3} justifyContent="center" marginBottom="50px">
           {Array.from({ length: 8 }).map((_, i) => (
             <Grid item xs={6} sm={6} md={3} lg={2.3} key={i}>
@@ -170,10 +214,12 @@ function Main() {
                 style={{
                   margin: "0 auto",
                   width: "170px",
+                  textTransform: "none",
+                  fontWeight: "normal",
                   color: "black",
                   backgroundColor:
                     selectedGeneration === i + 1 ? "#E2E6F8" : "white",
-                  borderRadius: "25px",
+                  borderRadius: "8px",
                 }}
               >
                 Generation {toRoman(i + 1)}
@@ -181,9 +227,7 @@ function Main() {
             </Grid>
           ))}
         </Grid>
-
         <Divider sx={{ marginBottom: "50px", borderColor: "#6c757d" }} />
-
         {loading && pokemonData.length === 0 ? (
           <h1>Loading...</h1>
         ) : isGenerationLoading ? (

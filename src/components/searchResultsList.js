@@ -7,7 +7,7 @@ export const SearchResultsList = ({ searchResults }) => {
   return (
     <div className="results-list">
       {searchResults.map((result, id) => (
-        <Link to={`/pokemon/${result.name}`} key={id} className="result-link"> 
+        <Link to={`/pokemon/${result.name}`} key={id} className="result-link">
           <SearchResults result={result} />
         </Link>
       ))}

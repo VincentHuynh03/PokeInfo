@@ -126,7 +126,7 @@ function PokeDetails() {
           width: "100%",
           backgroundColor: "#E6F8E2",
           mb: 2,
-          userSelect: "none", 
+          userSelect: "none",
           position: "relative",
           boxShadow:
             "0px 4px 8px rgba(0, 0, 0, 0.1), 0px 6px 12px rgba(0, 0, 0, 0.05)",

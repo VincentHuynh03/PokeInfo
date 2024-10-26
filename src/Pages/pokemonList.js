@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import pokegif from "../Assets/pokebg.gif";
 
 const typeColors = {
   grass: { backgroundColor: "#78C850", color: "#FFFFFF" },
@@ -46,10 +47,14 @@ function PokemonList({ pokemon, onClick }) {
         onClick={onClick}
         sx={{
           cursor: "pointer",
-          transition: "transform 0.3s ease",
+          transition: "transform 0.3s ease, background 0.3s ease",
+          position: "relative",
           "&:hover": {
             transform: "scale(1.05)",
             boxShadow: 3,
+            backgroundImage: `url(${pokegif})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           },
         }}
       >
@@ -71,8 +76,9 @@ function PokemonList({ pokemon, onClick }) {
         <CardContent
           sx={{
             textAlign: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            backdropFilter: "blur(4px)",
+            backgroundColor: "rgba(255, 255, 255, 1)",
+            position: "relative",
+            padding: 2,
           }}
         >
           <Typography variant="body2" sx={{ margin: 0 }}>
@@ -87,6 +93,8 @@ function PokemonList({ pokemon, onClick }) {
               spacing={0.5}
               justifyContent="center"
               alignItems="center"
+              flexDirection="row"
+              wrap="nowrap"
             >
               {pokemon.types.map((type, i) => (
                 <Grid item key={i}>
