@@ -119,9 +119,10 @@ function PokeDetails() {
     <>
       <Box
         sx={{
-          justifyContent: "flex-start",
           display: "flex",
-          alignItems: "flex-start",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           height: "150px",
           width: "100%",
           backgroundColor: "#E6F8E2",
@@ -141,7 +142,10 @@ function PokeDetails() {
             style={{ pointerEvents: "auto" }}
           />
         </Link>
-        <div className="search-bar-details-container">
+        <div
+          className="search-bar-details-container"
+          style={{ marginTop: "10px" }}
+        >
           <SearchBar setSearchResults={setSearchResults} />
           <SearchResultsList searchResults={searchResults} />
         </div>

@@ -181,25 +181,38 @@ function Main() {
     <ThemeProvider theme={theme}>
       <div
         className="gridContainer"
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1rem" }}
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 1rem",
+          overflow: "hidden",
+        }}
       >
-        <canvas
-          id="pokeball-canvas"
-          width="500"
-          height="500"
+        <div
           style={{
-            position: "absolute",
-            top: "-140px",
-            left: "700px",
-            zIndex: "-1",
+            position: "relative",
+            width: "100%",
+            overflow: "visible",
           }}
-        ></canvas>
-        <img
-          className="pokeinfo-font-image"
-          src={pokeinfoLogo}
-          alt="pokemon-font"
-          border="0"
-        />
+        >
+          <canvas
+            id="pokeball-canvas"
+            width="500"
+            height="500"
+            style={{
+              position: "absolute",
+              transform: "translate(-50%, -40%)",
+              left: "50%",
+              zIndex: "-1",
+            }}
+          ></canvas>
+          <img
+            className="pokeinfo-font-image"
+            src={pokeinfoLogo}
+            alt="pokemon-font"
+            style={{ position: "relative" }}
+          />
+        </div>
         <div className="search-bar-container">
           <SearchBar setSearchResults={setSearchResults} />
           <SearchResultsList searchResults={searchResults} />
@@ -213,7 +226,7 @@ function Main() {
                 onClick={() => handleGenerationClick(i + 1)}
                 style={{
                   margin: "0 auto",
-                  width: "170px",
+                  width: "160px",
                   textTransform: "none",
                   fontWeight: "normal",
                   color: "black",
