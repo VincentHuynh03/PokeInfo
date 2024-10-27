@@ -179,32 +179,13 @@ function Main() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        className="gridContainer"
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 1rem",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            overflow: "visible",
-          }}
-        >
+      <div className="gridContainer">
+        <div className="logoContainer">
           <canvas
             id="pokeball-canvas"
             width="500"
             height="500"
-            style={{
-              position: "absolute",
-              transform: "translate(-50%, -40%)",
-              left: "50%",
-              zIndex: "-1",
-            }}
+            className="pokeball-canvas"
           ></canvas>
           <img
             className="pokeinfo-font-image"

@@ -4,6 +4,23 @@
   display: flex;
   margin-bottom: 70px;
 }
+.gridContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+.logoContainer {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+.pokeball-canvas {
+  position: absolute;
+  transform: translate(-50%, -40%);
+  left: 50%;
+  z-index: -1;
+}
 
 .pokeinfo-font-image {
   display: block;
@@ -11,6 +28,7 @@
   margin-top: 60px;
   pointer-events: none;
 }
+
 @media (max-width: 768px) {
   .pokeinfo-font-image {
     width: 80%;
